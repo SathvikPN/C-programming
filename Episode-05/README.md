@@ -46,3 +46,13 @@ int ∗sorted_array[100];
 • Good approach for sorting arrays whose elements are very
 large (like strings) 
 
+```c
+char str1[] = "Hi" // length=3
+char str2[] = "Bye" // length=4
+char *strArray[] = {str1, str2} 
+/* strArray has only pointers. Not the characters themselves */
+
+
+int world [20][20]; // 2D array of int's
+/* Multidimensional Arrays are rectangular. Pointer Arrays can be arbitrary shaped */
+```
