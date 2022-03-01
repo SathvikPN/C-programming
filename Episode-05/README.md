@@ -38,9 +38,10 @@ char ∗strs [10]; – an array of char arrays (or strings)
 • Want to have a sorted version of the array, but not modify
 arr
 
-• Can declare a pointer array int ∗ sorted_array[100]; containing
-pointers to elements of arr and sort the pointers instead
-of the numbers themselves
+• Can declare a pointer array containing pointers to elements of arr and sort the pointers instead of the numbers themselves
+```c
+int ∗sorted_array[100];
+```
 
 • Good approach for sorting arrays whose elements are very
 large (like strings) 
