@@ -10,6 +10,8 @@ struct s_listnode
 
 struct s_listnode *stack_buffer = NULL; // start empty
 
+/*  NULL <-- Node1 <-- Node2 <-- stack_buffer   */
+
 void push(int elem)
 {
     struct s_listnode *new_node = (struct s_listnode*)malloc(sizeof(struct s_listnode));
@@ -43,3 +45,4 @@ int main()
     printf("%d ", pop());
     return 0;
 }
+
