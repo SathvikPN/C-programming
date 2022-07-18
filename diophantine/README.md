@@ -10,7 +10,7 @@ gcc -Wall -o run main.o diophant.o euclid.o -lm
 - it tells C to produce all possible warning messages
 -  A warning message will usually lead you to a bug in your program
 
-`-c'
+`-c`
 - produce an object file with name same as source code filename
 - `main.c` --> `main.o`
 
