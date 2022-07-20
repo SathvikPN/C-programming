@@ -83,6 +83,7 @@ int deltree(struct tnode* root)
         return count;
     count+=deltree(root->left);
     count+=deltree(root->right);
+    free(root);
     return 1+count;
 }
 
