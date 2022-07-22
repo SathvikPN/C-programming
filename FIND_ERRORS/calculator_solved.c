@@ -1,8 +1,9 @@
 /*
  * prob1.c
+ * Basic Calculator without support for paranthesis. [ADD, SUBTRACT, MULTIPLY, DIVIDE, NEGATE]
  *
- *  Created on: 
- *      Author: 
+ *  Created on: July 22nd
+ *      Author: SathvikPN (built upon a template)
  */
 
 #include <stdio.h>
