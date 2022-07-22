@@ -209,6 +209,10 @@ double evaluate(const char * str) {
 
 	/* get queue of tokens in postfix order from infix-ordered queue */
 	queue_postfix = infix_to_postfix(&queue_infix);
+#if DEBUG
+	printf("Postfix ");
+	display_queue(&queue_postfix);
+#endif
 
 	/* get answer from postfix-ordered queue */
 	ans = evaluate_postfix(&queue_postfix);
@@ -284,9 +288,63 @@ struct token_queue expr_to_infix(char * str) {
 /* creates a queue of tokens in postfix order from a queue of tokens in infix order */
 /* postcondition: returned queue contains all the tokens, and pqueue_infix should be 
    empty */
-struct token_queue infix_to_postfix(struct token_queue * pqueue_infix) {
+struct token_queue infix_to_postfix(struct token_queue * pqueue_infix) 
+{
 	/* TODO: construct postfix-ordered queue from infix-ordered queue;
 	   all tokens from infix queue should be added to postfix queue or freed */
+
+	   /* init postfix queue (output queue) */
+	struct token_queue queue_postfix;
+	queue_postfix.front = NULL;
+	queue_postfix.back = NULL;
+
+	/* init operator stack */
+	p_expr_token stack_top;
+	stack_top = NULL;
+
+	/* units of computing */
+	p_expr_token ptoken;
+	int condition1, condition2;
+	int precedence_stack_top, precedence_token;
+
+	while(ptoken = dequeue(pqueue_infix))
+	{
+		if(ptoken->type == OPERAND)
+		{
+			enqueue(&queue_postfix, ptoken);
+			continue;
+		}
+
+		/* iff ptoken->type == OPERATOR */
+		if(stack_top)
+		{
+			precedence_stack_top = op_precedences[stack_top->value.op_code];
+			precedence_token = op_precedences[ptoken->value.op_code];
+			while(
+				(stack_top) && 
+				(
+					(precedence_stack_top > precedence_token) ||
+					(
+						(precedence_stack_top == precedence_token) &&
+						(op_associativity[precedence_stack_top]==LEFT)
+					)
+				)
+			)
+			{
+				enqueue(&queue_postfix, pop(&stack_top));
+			}	
+		}
+
+		push(&stack_top, ptoken);
+	}
+
+	/* if operators still exist in stack */
+	while(ptoken = pop(&stack_top))
+		enqueue(&queue_postfix, ptoken);
+
+	/* infix queue no longer needed */
+	free(pqueue_infix);
+	return queue_postfix;
 }
 
 /* evalutes the postfix expression stored in the queue */
@@ -300,12 +358,12 @@ double evaluate_postfix(struct token_queue * pqueue_postfix) {
 void display_queue(struct token_queue* pqueue)
 {
 	p_expr_token i = pqueue->front;
-	printf("Queue: [");
+	printf("Queue: { ");
 	while(i!=NULL)
 	{
 		if(i->type == OPERAND)
 		{
-			printf("%.1f", i->value.operand);
+			printf("(%.1f)", i->value.operand);
 			i = i->linked_token;
 			continue;
 		}
@@ -325,7 +383,7 @@ void display_queue(struct token_queue* pqueue)
 			printf(" %c ", '/');
 			break;
 		case 4:
-			printf("-");
+			printf("(negate)");
 			break;
 		default:
 			break;
@@ -333,5 +391,5 @@ void display_queue(struct token_queue* pqueue)
 
 		i = (i->linked_token);
 	}
-	puts("]");
+	puts("  }");
 }
