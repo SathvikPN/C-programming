@@ -104,7 +104,7 @@ int main(void) {
 	char input[INPUT_MAX];
 	double ans;
 	unsigned int len;
-	puts("space delimited arithmetic expression calculator ------------ ");
+	puts("<< space delimited arithmetic expression calculator without paranthesis support >> ------------ ");
 	puts("[example] - 1 + 3");
 	puts("[result] 2");
 	do {
