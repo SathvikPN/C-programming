@@ -1,5 +1,5 @@
 /*
- * dictionary implementation using trie data structure
+ * Dictionary implementation using trie data structure
  *
  *  Created on: Aug 8th, 2022
  *      Author: SathvikPN (based on a template)
