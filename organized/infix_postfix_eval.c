@@ -344,12 +344,15 @@ struct token_queue infix_to_postfix(struct token_queue * pqueue_infix) {
                 /* empty statement to bugfix:
                 error: a label can only be part of a statement and a declaration is not a statement */
                 ; 
+                free(ptoken);
                 p_expr_token pop_ptoken;
                 /* does not validate for mismatched parenthesis */
                 while((pop_ptoken=pop(&ptop)) && (pop_ptoken->type!=LPARENS))
                 {
                     enqueue(&postfix_queue, pop_ptoken);                    
                 } 
+                if(pop_ptoken && pop_ptoken->type==LPARENS)
+                    free(pop_ptoken);
                 break;
 #endif
             default:
